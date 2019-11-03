@@ -1,23 +1,23 @@
-# HOTLOADER
+# HOT INSTALLER
 
 Install and load npm-packages during runtime from your code.
 
 ## Installation
 
 ```
-npm i hotloader
+npm i hot-installer
 ```
 
 ## Usage
 
 ```
-const createHotloader = require('hotloader');
-const hotloader = createHotloader({ installPath: '/packages' });
+const createHotInstaller = require('hot-installer');
+const hotInstaller = createHotInstaller({ installPath: '/packages' });
 
 (async () => {
-  const installedPackages = await hotloader.init();
-  await hotloader.install('http://myserver.net/mypackage-0.0.1.tar');
-  const myPackage = await hotloader.load('mypackage');
+  const installedPackages = await hotInstaller.init();
+  await hotInstaller.install('http://myserver.net/mypackage-0.0.1.tar');
+  const myPackage = await hotInstaller.load('mypackage');
   myPackage.exports.myMethod('yeah!');
 })();
 
@@ -28,32 +28,33 @@ const hotloader = createHotloader({ installPath: '/packages' });
 ### constructor
 
 ```
-const createHotloader = require('hotloader');
-const hotloader = createHotloader({ installPath });
+const createHotInstaller = require('hot-installer');
+const hotInstaller = createHotInstaller({ installPath });
 ```
 
-Creates an instance of the hotloader with the specified path in the file system.
+Creates an instance of the hotInstaller with the specified path in the file system.
+Creates empty package.json file in the provided installPath if necessary.
 
-### hotloader.init
-
-```
-const installedPackages = await hotloader.init();
-```
-
-Creates empty package.json file in the provided installPath if necessary. Loads all previously installed packages and returns their information as an array of objects (see hotloader.load).
-
-### hotloader.install
+### hotInstaller.init
 
 ```
-await hotloader.install(packageUrl);
+const installedPackages = await hotInstaller.init();
+```
+
+Loads all previously installed packages and returns their information as an array of objects (see hotInstaller.load).
+
+### hotInstaller.install
+
+```
+await hotInstaller.install(packageUrl);
 ```
 
 Installs a tarball from given url;
 
-### hotloader.load
+### hotInstaller.load
 
 ```
-const packageInfo = await hotloader.load(packageName);
+const packageInfo = await hotInstaller.load(packageName);
 ```
 
 Loads a package into memory deleting require cache beforehand.

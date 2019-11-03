@@ -6,7 +6,7 @@ const npm = require('./npm-promise');
 
 const templateData = require('./template.json');
 
-async function createHotLoader({ installPath }) {
+async function createHotInstaller({ installPath }) {
   const targetPath = path.join(installPath, 'package.json');
   try {
     await promisify(fs.access)(targetPath, fs.constants.F_OK);
@@ -47,4 +47,4 @@ async function createHotLoader({ installPath }) {
   };
 }
 
-module.exports = createHotLoader;
+module.exports = createHotInstaller;

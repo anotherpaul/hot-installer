@@ -1,5 +1,5 @@
 {
-  "name": "node-hotloader",
+  "name": "hot-installer",
   "version": "0.0.1",
   "description": "a library that allows hot installation and loading of npm packages",
   "main": "./src/index.js",
