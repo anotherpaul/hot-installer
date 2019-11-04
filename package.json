@@ -1,6 +1,6 @@
 {
   "name": "hot-installer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a library that allows hot installation and loading of npm packages",
   "main": "./src/index.js",
   "scripts": {

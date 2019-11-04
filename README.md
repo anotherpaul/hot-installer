@@ -47,14 +47,15 @@ Loads all previously installed packages and returns their information as an arra
 
 ```
 await hotInstaller.install(packageUrl);
+await hotInstaller.install([firstPackageUrl, secondPackageUrl]);
 ```
 
-Installs a tarball from given url;
+Installs a tarball from given url or an array of urls;
 
 ### hotInstaller.load
 
 ```
-const packageInfo = await hotInstaller.load(packageName);
+const packageInfo = hotInstaller.load(packageName);
 ```
 
 Loads a package into memory deleting require cache beforehand.
@@ -67,5 +68,22 @@ Returns an object with package exports and information from package.json:
   path: '/packages/node_modules/mypackage',
   packageUrl: 'http://myserver.net/mypackage-0.0.1.tar',
   exports, // actual contents of the package
+}
+```
+
+### hotInstaller.info
+
+```
+const packageInfo = hotInstaller.info(packageName);
+```
+
+Returns an object with package information from package.json without loading package in memory:
+
+```
+{
+  name: 'myPackage',
+  version: '0.0.1',
+  path: '/packages/node_modules/mypackage',
+  packageUrl: 'http://myserver.net/mypackage-0.0.1.tar'
 }
 ```

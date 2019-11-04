@@ -1,8 +1,6 @@
 /* eslint global-require: "off", import/no-dynamic-require: "off" */
 const path = require('path');
 const npm = require('npm');
-const { exec } = require('child_process');
-const { promisify } = require('util');
 
 const npmConfig = {
   depth: 0,
@@ -12,16 +10,27 @@ const npmConfig = {
 };
 
 function install(installPath, packageUrl) {
-  return promisify(exec)(`cd ${installPath} && npm install ${packageUrl}`);
+  return new Promise((resolve, reject) => {
+    npm.commands.install(installPath, packageUrl, err => (err ? reject(err) : resolve()));
+  });
+}
+
+function getPackageInfo(packagePath) {
+  const packageJsonPath = path.join(packagePath, 'package.json');
+  delete require.cache[require.resolve(packageJsonPath)];
+  return require(packageJsonPath);
 }
 
 function requireNoCache(packagePath) {
+  const packageJsonPath = path.join(packagePath, 'package.json');
+
+  delete require.cache[require.resolve(packagePath)];
+  delete require.cache[require.resolve(packageJsonPath)];
+
   const exports = require(packagePath);
-  const requirePath = path.join(packagePath, 'package.json');
+  const info = require(packageJsonPath);
 
-  delete require.cache[require.resolve(requirePath)];
-
-  return { exports, info: require(requirePath) };
+  return { exports, info };
 }
 
 function load(installPath) {
@@ -50,6 +59,7 @@ function list() {
 module.exports = {
   install,
   requireNoCache,
+  getPackageInfo,
   load,
   list,
 };

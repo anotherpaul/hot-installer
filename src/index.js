@@ -26,6 +26,17 @@ async function createHotInstaller({ installPath }) {
     };
   }
 
+  function info(packageName) {
+    const packagePath = path.join(installPath, 'node_modules', packageName);
+    const info = npm.getPackageInfo(packagePath);
+    return {
+      name: packageName,
+      version: info.version,
+      path: packagePath,
+      packageUrl: info._from, // eslint-disable-line no-underscore-dangle
+    };
+  }
+
   async function install(packageUrl) {
     try {
       await npm.install(installPath, packageUrl);
@@ -44,6 +55,7 @@ async function createHotInstaller({ installPath }) {
     install,
     init,
     load,
+    info,
   };
 }
 
