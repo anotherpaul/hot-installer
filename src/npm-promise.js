@@ -17,15 +17,15 @@ function install(installPath, packageUrl) {
 
 function getPackageInfo(packagePath) {
   const packageJsonPath = path.join(packagePath, 'package.json');
-  delete require.cache[require.resolve(packageJsonPath)];
+  require.cache[require.resolve(packageJsonPath)] = null;
   return require(packageJsonPath);
 }
 
 function requireNoCache(packagePath) {
   const packageJsonPath = path.join(packagePath, 'package.json');
 
-  delete require.cache[require.resolve(packagePath)];
-  delete require.cache[require.resolve(packageJsonPath)];
+  require.cache[require.resolve(packagePath)] = null;
+  require.cache[require.resolve(packageJsonPath)] = null;
 
   const exports = require(packagePath);
   const info = require(packageJsonPath);
