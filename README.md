@@ -12,9 +12,9 @@ npm i hot-installer
 
 ```
 const createHotInstaller = require('hot-installer');
-const hotInstaller = createHotInstaller({ installPath: '/packages' });
 
 (async () => {
+  const hotInstaller = await createHotInstaller({ installPath: '/packages' });
   const installedPackages = await hotInstaller.init();
   await hotInstaller.install('http://myserver.net/mypackage-0.0.1.tar');
   const myPackage = await hotInstaller.load('mypackage');
